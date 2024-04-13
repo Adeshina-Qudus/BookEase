@@ -1,10 +1,16 @@
 package africa.semicolon.BookEase.service;
 
+import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
-import africa.semicolon.BookEase.repository.UserRepository;
+import africa.semicolon.BookEase.data.model.User;
+import africa.semicolon.BookEase.exception.InvalidMailFormatException;
+import africa.semicolon.BookEase.exception.InvalidPasswordFormat;
+import africa.semicolon.BookEase.utils.BookEaseUserMapper;
+import africa.semicolon.BookEase.utils.Validation;
+import africa.semicolon.BookEase.utils.Verification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import africa.semicolon.BookEase.exception.UserAlreadyExistException;
 @Service
 public class BookEaseUserService implements UserService{
 
@@ -15,9 +21,18 @@ public class BookEaseUserService implements UserService{
         if(userExist(request.getEmail())) throw new UserAlreadyExistException(
                 request.getEmail()+" already exist"
         );
+        if (!(Verification.verifyEmail(request.getEmail()))) throw new InvalidMailFormatException(
+                "Invalid Email Format"
+        );
+        if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormat(
+                "Invalid Password Format"
+        ) ;
+        User user = BookEaseUserMapper.map(request);
+        userRepository.save(user);
     }
 
     private boolean userExist(String email) {
-        return userRepository.findByMail(email);
+        User user =  userRepository.findByEmail(email);
+        return user != null;
     }
 }
