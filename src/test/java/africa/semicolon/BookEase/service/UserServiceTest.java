@@ -1,6 +1,8 @@
 package africa.semicolon.BookEase.service;
 
+import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +14,13 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void deleteAll(){
+        userRepository.deleteAll();
+    }
 
     @Test
     public void userCreatingAccountTest(){
@@ -19,10 +28,11 @@ public class UserServiceTest {
 
         request.setName("Femi");
         request.setEmail("djfemz22@gmail.com");
-        request.setPassword("Femzy12345");
+        request.setPassword("Femzy12@");
 
         userService.createAccount(request);
 
+        assertEquals(1,userRepository.count());
 
     }
 }

@@ -5,8 +5,8 @@ import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
 import africa.semicolon.BookEase.data.model.User;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormat;
+import africa.semicolon.BookEase.exception.LengthMoreThan100Exception;
 import africa.semicolon.BookEase.utils.BookEaseUserMapper;
-import africa.semicolon.BookEase.utils.Validation;
 import africa.semicolon.BookEase.utils.Verification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,9 @@ public class BookEaseUserService implements UserService{
     UserRepository userRepository;
     @Override
     public void createAccount(CreateAccountRequest request) {
+        if (request.getName().length() > 100) throw new LengthMoreThan100Exception(
+          "Name is limited to 100 characters"
+        );
         if(userExist(request.getEmail())) throw new UserAlreadyExistException(
                 request.getEmail()+" already exist"
         );
@@ -26,7 +29,7 @@ public class BookEaseUserService implements UserService{
         );
         if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormat(
                 "Invalid Password Format"
-        ) ;
+        );
         User user = BookEaseUserMapper.map(request);
         userRepository.save(user);
     }

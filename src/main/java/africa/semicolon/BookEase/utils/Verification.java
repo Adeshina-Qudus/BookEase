@@ -2,7 +2,7 @@ package africa.semicolon.BookEase.utils;
 
 public class Verification {
     public static boolean verifyPassword(String password) {
-        return password.matches("^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$");
+        return password.matches("^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$");
     }
 
     public static boolean verifyEmail(String email) {
