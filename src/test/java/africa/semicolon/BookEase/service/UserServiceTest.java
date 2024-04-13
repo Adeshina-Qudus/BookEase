@@ -2,7 +2,9 @@ package africa.semicolon.BookEase.service;
 
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
+import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
 import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
+import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -57,9 +63,41 @@ public class UserServiceTest {
         CreateAccountRequest request = new CreateAccountRequest();
 
         request.setName("Femi");
-        request.setEmail("djfemz22@gmail.");
+        request.setEmail("djfemz22@gmail.com");
         request.setPassword("Femzy12");
 
         assertThrows(InvalidPasswordFormatException.class,()->userService.createAccount(request));
+    }
+
+    @Test
+    public void userCreateEventTest(){
+
+        CreateAccountRequest accountRequest = new CreateAccountRequest();
+
+        accountRequest.setName("Femi");
+        accountRequest.setEmail("djfemz22@gmail.com");
+        accountRequest.setPassword("Femzy12@");
+
+        userService.createAccount(accountRequest);
+
+
+        CreateEventRequest request = new CreateEventRequest();
+
+        request.setName("Mr Money With The Vibe Concert");
+
+        String dateInput = "01/13/2024";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate date = LocalDate.parse(dateInput,formatter);
+        request.setDate(date);
+
+        request.setAvailableAttendees(20);
+        request.setDescription("description");
+        request.setCategory("concert");
+        request.setUserEmail("djfemz22@gmail.com");
+
+        CreateEventResponse response = userService.createEvent(request);
+
+        assertThat(response).isNotNull();
+
     }
 }

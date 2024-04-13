@@ -1,9 +1,12 @@
 package africa.semicolon.BookEase.service;
 
+import africa.semicolon.BookEase.data.model.Event;
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
 import africa.semicolon.BookEase.data.model.User;
+import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
 import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
+import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
 import africa.semicolon.BookEase.exception.LengthMoreThan100Exception;
@@ -17,25 +20,38 @@ public class BookEaseUserService implements UserService{
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    EventService eventService;
     @Override
     public CreateAccountResponse createAccount(CreateAccountRequest request) {
         CreateAccountResponse response = new CreateAccountResponse();
-        if (request.getName().length() > 100) throw new LengthMoreThan100Exception(
-          "Name is limited to 100 characters"
-        );
         if(userExist(request.getEmail())) throw new UserAlreadyExistException(
                 request.getEmail()+" already exist"
         );
-        if (!(Verification.verifyEmail(request.getEmail()))) throw new InvalidMailFormatException(
-                "Invalid Email Format"
-        );
-        if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormatException(
-                "Invalid Password Format"
-        );
+        verifyEmail(request);
+        verifyPassword(request);
         User user = BookEaseUserMapper.map(request);
         userRepository.save(user);
         response.setMessage("Account Created");
         return response;
+    }
+
+    private static void verifyPassword(CreateAccountRequest request) {
+        if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormatException(
+                "Invalid Password Format"
+        );
+    }
+
+    private static void verifyEmail(CreateAccountRequest request) {
+        if (!(Verification.verifyEmail(request.getEmail()))) throw new InvalidMailFormatException(
+                "Invalid Email Format"
+        );
+    }
+
+    @Override
+    public CreateEventResponse createEvent(CreateEventRequest request) {
+        User user = userRepository.findByEmail(request.getUserEmail());
+        return eventService.createEvent(request);
     }
 
     private boolean userExist(String email) {
