@@ -83,7 +83,7 @@ public class UserServiceTest {
 
         CreateEventRequest request = new CreateEventRequest();
 
-        request.setName("Mr Money With The Vibe Concert");
+        request.setEventName("Mr Money With The Vibe Concert");
 
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -91,7 +91,7 @@ public class UserServiceTest {
         request.setDate(date);
 
         request.setAvailableAttendees(20);
-        request.setDescription("description");
+        request.setEventDescription("description");
         request.setCategory("concert");
         request.setUserEmail("djfemz22@gmail.com");
 
