@@ -3,6 +3,7 @@ package africa.semicolon.BookEase.service;
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
 import africa.semicolon.BookEase.data.model.User;
+import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormat;
 import africa.semicolon.BookEase.exception.LengthMoreThan100Exception;
@@ -17,7 +18,8 @@ public class BookEaseUserService implements UserService{
     @Autowired
     UserRepository userRepository;
     @Override
-    public void createAccount(CreateAccountRequest request) {
+    public CreateAccountResponse createAccount(CreateAccountRequest request) {
+        CreateAccountResponse response = new CreateAccountResponse();
         if (request.getName().length() > 100) throw new LengthMoreThan100Exception(
           "Name is limited to 100 characters"
         );
@@ -32,6 +34,8 @@ public class BookEaseUserService implements UserService{
         );
         User user = BookEaseUserMapper.map(request);
         userRepository.save(user);
+        response.setMessage("Account Created");
+        return response;
     }
 
     private boolean userExist(String email) {

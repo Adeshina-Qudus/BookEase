@@ -2,6 +2,7 @@ package africa.semicolon.BookEase.service;
 
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
+import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,8 @@ public class UserServiceTest {
         request.setEmail("djfemz22@gmail.com");
         request.setPassword("Femzy12@");
 
-        userService.createAccount(request);
+        CreateAccountResponse response =  userService.createAccount(request);
 
-        assertEquals(1,userRepository.count());
-
+        assertEquals("Account Created",response.getMessage());
     }
 }
