@@ -5,7 +5,7 @@ import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
 import africa.semicolon.BookEase.data.model.User;
 import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
-import africa.semicolon.BookEase.exception.InvalidPasswordFormat;
+import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
 import africa.semicolon.BookEase.exception.LengthMoreThan100Exception;
 import africa.semicolon.BookEase.utils.BookEaseUserMapper;
 import africa.semicolon.BookEase.utils.Verification;
@@ -29,7 +29,7 @@ public class BookEaseUserService implements UserService{
         if (!(Verification.verifyEmail(request.getEmail()))) throw new InvalidMailFormatException(
                 "Invalid Email Format"
         );
-        if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormat(
+        if(!(Verification.verifyPassword(request.getPassword()))) throw new InvalidPasswordFormatException(
                 "Invalid Password Format"
         );
         User user = BookEaseUserMapper.map(request);
