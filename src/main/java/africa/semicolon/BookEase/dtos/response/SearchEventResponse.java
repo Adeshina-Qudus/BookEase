@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class SearchEventResponse {
     private String eventName;
     private LocalDate date;
-    private int availableAttendees;
+    private Integer availableAttendees;
     private String eventDescription;
     private Category category;
 }

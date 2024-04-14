@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class CreateEventRequest {
     private String eventName;
     private LocalDate date;
-    private int availableAttendees;
+    private Integer availableAttendees;
     private String eventDescription;
     private String category;
     private String userEmail;

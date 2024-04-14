@@ -17,5 +17,5 @@ public class Ticket {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String eventName;
-    private int numberOfReservedTicket;
+    private Integer tickedId;
 }

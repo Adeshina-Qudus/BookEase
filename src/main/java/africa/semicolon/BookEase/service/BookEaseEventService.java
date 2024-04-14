@@ -18,10 +18,13 @@ public class BookEaseEventService implements EventService{
 
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    TicketService ticketService;
     @Override
     public CreateEventResponse createEvent(CreateEventRequest request) {
         CreateEventResponse response = new CreateEventResponse();
          Event event = ModelMapperConfig.modelMapper().map(request,Event.class);
+         event.setAvailableAttendees(0);
          for (Category category : Category.values()) {
              if (request.getCategory().toUpperCase().equals(category.name())) {
                  event.setCategory(category);
@@ -46,16 +49,9 @@ public class BookEaseEventService implements EventService{
 
     @Override
     public ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest) {
+        Event event = eventRepository.findByEventName(reserveTicketRequest.getEventName());
 
-        ReserveTicketResponse response = new ReserveTicketResponse();
-        Event event = null;
-
-        for (Event foundEvent : eventRepository.findAll()){
-            if (foundEvent.getEventName().equals(reserveTicketRequest.getEventName())){
-                event = foundEvent;
-            }
-        }
-        event.getTicket();
-        return null;
+        return ticketService.reserveTicket(event,reserveTicketRequest.
+                getNumberOfReservedTicket());
     }
 }

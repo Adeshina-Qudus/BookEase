@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class ReserveTicketRequest {
 
-    private int numberOfReservedTicked;
+    private Integer numberOfReservedTicket;
     private String   eventName;
     private String attendeesEmail;
 }

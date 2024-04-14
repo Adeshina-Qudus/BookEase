@@ -1,11 +1,11 @@
 package africa.semicolon.BookEase.data.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Setter
@@ -18,8 +18,10 @@ public class Event {
     private Long id;
     private String eventName;
     private LocalDate date;
-    private int availableAttendees = 100;
+    @Column(name ="availableAttendees")
+    private Integer availableAttendees;
     private String eventDescription;
     private Category category;
-    private Ticket ticket;
+    @OneToMany()
+    private List<Ticket> ticket;
 }
