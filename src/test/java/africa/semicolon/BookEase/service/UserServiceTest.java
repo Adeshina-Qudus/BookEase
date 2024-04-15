@@ -1,5 +1,7 @@
 package africa.semicolon.BookEase.service;
 
+import africa.semicolon.BookEase.data.repositories.EventRepository;
+import africa.semicolon.BookEase.data.repositories.TicketRepository;
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
 import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
@@ -11,6 +13,7 @@ import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
 import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +33,17 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
-    @BeforeEach
-    public void deleteAll(){
-        userRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void deleteAll(){
+//        userRepository.deleteAll();
+//        eventRepository.deleteAll();
+//        ticketRepository.deleteAll();
+//    }
 
     @Test
     public void userCreatingAccountTest(){
@@ -136,12 +145,12 @@ public class UserServiceTest {
 
         CreateAccountRequest accountRequest = new CreateAccountRequest();
         accountRequest.setName("Femi");
-        accountRequest.setEmail("djfemz22@gmail.com");
+        accountRequest.setEmail("djfem5z123422@gmail.com");
         accountRequest.setPassword("Femzy12@");
         userService.createAccount(accountRequest);
 
         CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert  LetGoBaby!!!");
+        request.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
 
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -150,13 +159,13 @@ public class UserServiceTest {
 
         request.setEventDescription("description");
         request.setCategory("concert");
-        request.setUserEmail("djfemz22@gmail.com");
+        request.setUserEmail("djfemz222@gmail.com");
 
         userService.createEvent(request);
 
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  LetGoBaby!!!");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
 
         ReserveTicketResponse ticketResponse = userService.reserveTicket(reserveTicketRequest);

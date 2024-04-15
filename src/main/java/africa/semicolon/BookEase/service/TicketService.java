@@ -6,5 +6,5 @@ import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
 
 public interface TicketService {
 
-    ReserveTicketResponse reserveTicket(Event event, Integer numberOfReservedTicket);
+    Event reserveTicket(Event event, Integer numberOfReservedTicket);
 }

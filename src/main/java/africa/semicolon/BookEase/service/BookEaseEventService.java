@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class BookEaseEventService implements EventService{
 
     @Autowired
@@ -49,9 +50,20 @@ public class BookEaseEventService implements EventService{
 
     @Override
     public ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest) {
+        ReserveTicketResponse response ;
         Event event = eventRepository.findByEventName(reserveTicketRequest.getEventName());
-
-        return ticketService.reserveTicket(event,reserveTicketRequest.
+        event =  ticketService.reserveTicket(event,reserveTicketRequest.
                 getNumberOfReservedTicket());
+        eventRepository.save(event);
+        response = ModelMapperConfig.modelMapper().map(event,ReserveTicketResponse.class);
+        response.setNumberOfReservedTicked(response.getNumberOfReservedTicked());
+        return response;
     }
+
+    @Override
+    public void save(Event event) {
+        eventRepository.save(event);
+    }
+
+
 }
