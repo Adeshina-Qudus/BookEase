@@ -56,5 +56,15 @@ public class BookEaseUserController {
         }
     }
 
+    @PostMapping("/reserveTicket")
+    public ResponseEntity<?> reserveTicket(@RequestBody ReserveTicketRequest request){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true,userService.reserveTicket(request)
+            ),HttpStatus.OK);
+        }catch (BookEaseException exception){
+            return new ResponseEntity<>(new ApiResponse(false,exception.getMessage()),HttpStatus.NOT_IMPLEMENTED);
+        }
+    }
+
 
 }
