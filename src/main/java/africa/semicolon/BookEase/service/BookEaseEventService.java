@@ -7,11 +7,13 @@ import africa.semicolon.BookEase.data.model.Ticket;
 import africa.semicolon.BookEase.data.repositories.EventRepository;
 import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.dtos.response.*;
+import africa.semicolon.BookEase.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -23,6 +25,8 @@ public class BookEaseEventService implements EventService{
     TicketService ticketService;
     @Override
     public CreateEventResponse createEvent(CreateEventRequest request) {
+        if (eventExist(request.getEventName())) throw new EventAlreadyExistException(request.getEventName()+
+                " already exist");
         CreateEventResponse response = new CreateEventResponse();
          Event event = ModelMapperConfig.modelMapper().map(request,Event.class);
          event.setAvailableAttendees(0);
@@ -36,8 +40,15 @@ public class BookEaseEventService implements EventService{
          return response;
     }
 
+    private boolean eventExist(String eventName) {
+        Event event = eventRepository.findByEventName(eventName);
+        return event != null;
+    }
+
     @Override
     public SearchEventResponse searchEvent(SearchEventRequest searchEventRequest) {
+        if (!eventExist(searchEventRequest.getEventName())) throw new EventDoesntExistException(
+                searchEventRequest.getEventName()+" doesnt exist ");
         SearchEventResponse searchEventResponse = new SearchEventResponse();
 
         for (Event event : eventRepository.findAll()){
@@ -74,12 +85,13 @@ public class BookEaseEventService implements EventService{
 
     @Override
     public CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest) {
-        CancelReservationResponse response ;
+        CancelReservationResponse response = new CancelReservationResponse();
         Event event = eventRepository.findByEventName(cancelReservationRequest.getEventName());
         event = ticketService.cancelReservedTicket(event,cancelReservationRequest.getNumberOfReservedTicket(),
                 cancelReservationRequest.getAttendeesEmail());
-
-        return null;
+        eventRepository.save(event);
+        response.setMessage("Canceled");
+        return response;
     }
 
     private List<ViewBookedEventResponse> mappingEachEvent(List<ViewBookedEventResponse> bookedEventResponses,

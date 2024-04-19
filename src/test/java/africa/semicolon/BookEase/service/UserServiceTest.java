@@ -33,12 +33,12 @@ public class UserServiceTest {
     @Autowired
     private EventRepository eventRepository;
 
-//    @AfterEach
-//    public void deleteAll(){
-//        userRepository.deleteAll();
-//        eventRepository.deleteAll();
-//        ticketRepository.deleteAll();
-//    }
+    @AfterEach
+    public void deleteAll(){
+        userRepository.deleteAll();
+        eventRepository.deleteAll();
+        ticketRepository.deleteAll();
+    }
 
     @Test
     public void userCreatingAccountTest(){
