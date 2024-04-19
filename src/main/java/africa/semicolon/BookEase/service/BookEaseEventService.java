@@ -3,15 +3,21 @@ package africa.semicolon.BookEase.service;
 import africa.semicolon.BookEase.config.ModelMapperConfig;
 import africa.semicolon.BookEase.data.model.Category;
 import africa.semicolon.BookEase.data.model.Event;
+import africa.semicolon.BookEase.data.model.Ticket;
 import africa.semicolon.BookEase.data.repositories.EventRepository;
 import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
 import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
 import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
+import africa.semicolon.BookEase.dtos.request.ViewBookedEventRequest;
 import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
 import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
 import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
+import africa.semicolon.BookEase.dtos.response.ViewBookedEventResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 
@@ -65,5 +71,22 @@ public class BookEaseEventService implements EventService{
         eventRepository.save(event);
     }
 
+    @Override
+    public List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest) {
+        List<ViewBookedEventResponse> bookedEventResponses = new ArrayList<>();
+        List<Ticket> tickets = ticketService.findByEmail(viewBookedEventRequest.getUserEmail());
+        return mappingEachEvent(bookedEventResponses,tickets);
+    }
 
+    private List<ViewBookedEventResponse> mappingEachEvent(List<ViewBookedEventResponse> bookedEventResponses,
+                                                           List<Ticket> tickets) {
+        ViewBookedEventResponse viewBookedEventResponse = new ViewBookedEventResponse();
+        for (Ticket ticket : tickets){
+            Event event = eventRepository.findByEventName(ticket.getEventName());
+            viewBookedEventResponse.setEventName(event.getEventName());
+            viewBookedEventResponse.setEventDescription(event.getEventDescription());
+            bookedEventResponses.add(viewBookedEventResponse);
+        }
+        return bookedEventResponses;
+    }
 }

@@ -65,7 +65,7 @@ public class BookEaseUserService implements UserService{
 
     @Override
     public List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest) {
-        return null;
+        return eventService.viewBookedEvent(viewBookedEventRequest);
     }
 
     private boolean userExist(String email) {

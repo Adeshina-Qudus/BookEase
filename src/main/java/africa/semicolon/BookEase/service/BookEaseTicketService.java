@@ -7,6 +7,8 @@ import africa.semicolon.BookEase.exception.TicketCannotBeReservedAnymoreExceptio
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookEaseTicketService implements TicketService{
 
@@ -24,6 +26,12 @@ public class BookEaseTicketService implements TicketService{
 
         event.setAvailableAttendees((int) (event.getAvailableAttendees()+ ticketRepository.count()));
         return event;
+    }
+
+    @Override
+    public List<Ticket> findByEmail(String userEmail) {
+        return ticketRepository.findAllTicketThatBelongsTo(userEmail);
+
     }
 
     private void createTicket(Event event, int count,String email) {
