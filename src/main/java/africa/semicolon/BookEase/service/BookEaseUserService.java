@@ -68,6 +68,11 @@ public class BookEaseUserService implements UserService{
         return eventService.viewBookedEvent(viewBookedEventRequest);
     }
 
+    @Override
+    public CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest) {
+        return eventService.cancelReservation(cancelReservationRequest);
+    }
+
     private boolean userExist(String email) {
         User user =  userRepository.findByEmail(email);
         return user != null;

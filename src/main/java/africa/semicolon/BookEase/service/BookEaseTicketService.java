@@ -34,6 +34,23 @@ public class BookEaseTicketService implements TicketService{
 
     }
 
+    @Override
+    public Event cancelReservedTicket(Event event, Integer numberOfReservedTicket, String attendeesEmail) {
+        List<Ticket> tickets = ticketRepository.findByEmail(attendeesEmail);
+        for (int count = 0 ; count < numberOfReservedTicket;count ++){
+            cancelTicket(event, tickets, count);
+        }
+        event.setAvailableAttendees((int) event.getAvailableAttendees() - numberOfReservedTicket);
+        return event;
+    }
+
+    private void cancelTicket(Event event, List<Ticket> tickets, int count) {
+        if (tickets.get(count).getEventName().equals(event.getEventName())){
+            ticketRepository.delete(tickets.get(count));
+        }
+    }
+
+
     private void createTicket(Event event, int count,String email) {
         Ticket ticket = new Ticket();
         ticket.setEventName(event.getEventName());

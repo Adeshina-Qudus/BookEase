@@ -17,4 +17,6 @@ public interface UserService {
     ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest);
 
     List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest);
+
+    CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest);
 }

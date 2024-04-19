@@ -1,14 +1,8 @@
 package africa.semicolon.BookEase.service;
 
 import africa.semicolon.BookEase.data.model.Event;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
-import africa.semicolon.BookEase.dtos.request.ViewBookedEventRequest;
-import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
-import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
-import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
-import africa.semicolon.BookEase.dtos.response.ViewBookedEventResponse;
+import africa.semicolon.BookEase.dtos.request.*;
+import africa.semicolon.BookEase.dtos.response.*;
 
 import java.util.List;
 
@@ -22,4 +16,6 @@ public interface EventService {
     void save(Event event);
 
     List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest);
+
+    CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest);
 }

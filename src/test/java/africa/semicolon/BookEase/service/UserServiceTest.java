@@ -210,4 +210,30 @@ public class UserServiceTest {
 
         assertThat(response).isNotNull();
     }
+
+
+
+    @Test
+    public void cancelReservationTest(){
+        CreateAccountRequest accountRequest = new CreateAccountRequest();
+        accountRequest.setName("Femi");
+        accountRequest.setEmail("qudusa55@gmail.com");
+        accountRequest.setPassword("Femzy12@");
+        userService.createAccount(accountRequest);
+        ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
+        reserveTicketRequest.setNumberOfReservedTicket(3);
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
+        reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
+        userService.reserveTicket(reserveTicketRequest);
+
+        CancelReservationRequest cancelReservationRequest = new CancelReservationRequest();
+        cancelReservationRequest.setNumberOfReservedTicket(2);
+        cancelReservationRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
+        cancelReservationRequest.setAttendeesEmail("djfemz22@gmail.com");
+
+        CancelReservationResponse response =
+                userService.cancelReservation(cancelReservationRequest);
+        assertThat(response).isNotNull();
+
+    }
 }

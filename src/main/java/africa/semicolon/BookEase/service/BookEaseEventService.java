@@ -5,14 +5,8 @@ import africa.semicolon.BookEase.data.model.Category;
 import africa.semicolon.BookEase.data.model.Event;
 import africa.semicolon.BookEase.data.model.Ticket;
 import africa.semicolon.BookEase.data.repositories.EventRepository;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
-import africa.semicolon.BookEase.dtos.request.ViewBookedEventRequest;
-import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
-import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
-import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
-import africa.semicolon.BookEase.dtos.response.ViewBookedEventResponse;
+import africa.semicolon.BookEase.dtos.request.*;
+import africa.semicolon.BookEase.dtos.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +70,16 @@ public class BookEaseEventService implements EventService{
         List<ViewBookedEventResponse> bookedEventResponses = new ArrayList<>();
         List<Ticket> tickets = ticketService.findByEmail(viewBookedEventRequest.getUserEmail());
         return mappingEachEvent(bookedEventResponses,tickets);
+    }
+
+    @Override
+    public CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest) {
+        CancelReservationResponse response ;
+        Event event = eventRepository.findByEventName(cancelReservationRequest.getEventName());
+        event = ticketService.cancelReservedTicket(event,cancelReservationRequest.getNumberOfReservedTicket(),
+                cancelReservationRequest.getAttendeesEmail());
+
+        return null;
     }
 
     private List<ViewBookedEventResponse> mappingEachEvent(List<ViewBookedEventResponse> bookedEventResponses,

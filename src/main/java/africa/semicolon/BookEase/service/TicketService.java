@@ -10,4 +10,6 @@ public interface TicketService {
     Event reserveTicket(Event event, Integer numberOfReservedTicket, String attendeesEmail);
 
     List<Ticket> findByEmail(String userEmail);
+
+    Event cancelReservedTicket(Event event, Integer numberOfReservedTicket, String attendeesEmail);
 }
