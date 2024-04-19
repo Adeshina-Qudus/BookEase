@@ -53,7 +53,7 @@ public class BookEaseEventService implements EventService{
         ReserveTicketResponse response ;
         Event event = eventRepository.findByEventName(reserveTicketRequest.getEventName());
         event =  ticketService.reserveTicket(event,reserveTicketRequest.
-                getNumberOfReservedTicket());
+                getNumberOfReservedTicket(),reserveTicketRequest.getAttendeesEmail());
         eventRepository.save(event);
         response = ModelMapperConfig.modelMapper().map(event,ReserveTicketResponse.class);
         response.setNumberOfReservedTicked(response.getNumberOfReservedTicked());

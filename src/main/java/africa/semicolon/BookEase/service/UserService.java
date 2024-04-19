@@ -1,14 +1,10 @@
 package africa.semicolon.BookEase.service;
 
-import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
-import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
-import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
-import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
-import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
+import africa.semicolon.BookEase.dtos.request.*;
+import africa.semicolon.BookEase.dtos.response.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 public interface UserService {
@@ -19,4 +15,6 @@ public interface UserService {
     SearchEventResponse searchEvent(SearchEventRequest searchEventRequest);
 
     ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest);
+
+    List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest);
 }

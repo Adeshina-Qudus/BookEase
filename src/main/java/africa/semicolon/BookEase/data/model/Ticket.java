@@ -18,4 +18,5 @@ public class Ticket {
     private Long id;
     private String eventName;
     private Integer tickedId;
+    private String email;
 }

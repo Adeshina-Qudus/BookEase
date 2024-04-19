@@ -1,15 +1,9 @@
 package africa.semicolon.BookEase.service;
 
 import africa.semicolon.BookEase.data.repositories.UserRepository;
-import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
+import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.data.model.User;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
-import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
-import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
-import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
-import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
+import africa.semicolon.BookEase.dtos.response.*;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
 import africa.semicolon.BookEase.utils.BookEaseUserMapper;
@@ -17,6 +11,9 @@ import africa.semicolon.BookEase.utils.Verification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import africa.semicolon.BookEase.exception.UserAlreadyExistException;
+
+import java.util.List;
+
 @Service
 public class BookEaseUserService implements UserService{
 
@@ -64,6 +61,11 @@ public class BookEaseUserService implements UserService{
     @Override
     public ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest) {
         return eventService.reserveTicket(reserveTicketRequest);
+    }
+
+    @Override
+    public List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest) {
+        return null;
     }
 
     private boolean userExist(String email) {

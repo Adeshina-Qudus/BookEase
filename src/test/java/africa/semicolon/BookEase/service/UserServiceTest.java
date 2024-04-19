@@ -3,14 +3,8 @@ package africa.semicolon.BookEase.service;
 import africa.semicolon.BookEase.data.repositories.EventRepository;
 import africa.semicolon.BookEase.data.repositories.TicketRepository;
 import africa.semicolon.BookEase.data.repositories.UserRepository;
-import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
-import africa.semicolon.BookEase.dtos.response.CreateAccountResponse;
-import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
-import africa.semicolon.BookEase.dtos.response.ReserveTicketResponse;
-import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
+import africa.semicolon.BookEase.dtos.request.*;
+import africa.semicolon.BookEase.dtos.response.*;
 import africa.semicolon.BookEase.exception.InvalidMailFormatException;
 import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -173,5 +168,42 @@ public class UserServiceTest {
         System.out.println(ticketResponse);
 
         assertThat(ticketResponse).isNotNull();
+    }
+
+    @Test
+    public void viewBookedEventTest(){
+
+        CreateAccountRequest accountRequest = new CreateAccountRequest();
+        accountRequest.setName("Femi");
+        accountRequest.setEmail("djfem5z123422@gmail.com");
+        accountRequest.setPassword("Femzy12@");
+        userService.createAccount(accountRequest);
+
+        CreateEventRequest request = new CreateEventRequest();
+        request.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
+
+        String dateInput = "01/13/2024";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate date = LocalDate.parse(dateInput,formatter);
+        request.setDate(date);
+
+        request.setEventDescription("description");
+        request.setCategory("concert");
+        request.setUserEmail("djfemz222@gmail.com");
+
+        userService.createEvent(request);
+
+        ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
+        reserveTicketRequest.setNumberOfReservedTicket(3);
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
+        reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
+        userService.reserveTicket(reserveTicketRequest);
+
+        ViewBookedEventRequest viewBookedEventRequest = new ViewBookedEventRequest();
+
+        viewBookedEventRequest.setUserEmail("djfemz22@gmail.com");
+
+       List<ViewBookedEventResponse> response =
+                userService.viewBookedEvent(viewBookedEventRequest);
     }
 }
