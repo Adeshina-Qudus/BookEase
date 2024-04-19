@@ -30,14 +30,14 @@ public class BookEaseTicketService implements TicketService{
 
     @Override
     public List<Ticket> findByEmail(String userEmail) {
-        return ticketRepository.findAllTicketThatBelongsTo(userEmail);
+        return ticketRepository.findByEmail(userEmail);
 
     }
 
     private void createTicket(Event event, int count,String email) {
         Ticket ticket = new Ticket();
         ticket.setEventName(event.getEventName());
-        ticket.setTickedId(count +1);
+        ticket.setTicketId(count +1);
         ticket.setEmail(email);
         ticketRepository.save(ticket);
     }

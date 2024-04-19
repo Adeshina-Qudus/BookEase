@@ -2,7 +2,6 @@ package africa.semicolon.BookEase.data.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +16,6 @@ public class Ticket {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String eventName;
-    private Integer tickedId;
+    private Integer ticketId;
     private String email;
 }

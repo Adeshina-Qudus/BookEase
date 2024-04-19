@@ -175,12 +175,12 @@ public class UserServiceTest {
 
         CreateAccountRequest accountRequest = new CreateAccountRequest();
         accountRequest.setName("Femi");
-        accountRequest.setEmail("djfem5z123422@gmail.com");
+        accountRequest.setEmail("djfem154z1123422@gmail.com");
         accountRequest.setPassword("Femzy12@");
         userService.createAccount(accountRequest);
 
         CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
+        request.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
 
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -195,7 +195,7 @@ public class UserServiceTest {
 
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
         userService.reserveTicket(reserveTicketRequest);
 
@@ -205,5 +205,9 @@ public class UserServiceTest {
 
        List<ViewBookedEventResponse> response =
                 userService.viewBookedEvent(viewBookedEventRequest);
+
+        System.out.println(response.toString());
+
+        assertThat(response).isNotNull();
     }
 }
