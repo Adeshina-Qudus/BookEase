@@ -61,6 +61,8 @@ public class BookEaseEventService implements EventService{
 
     @Override
     public ReserveTicketResponse reserveTicket(ReserveTicketRequest reserveTicketRequest) {
+        if (!eventExist(reserveTicketRequest.getEventName())) throw new EventDoesntExistException(
+                reserveTicketRequest.getEventName()+" doesnt exist ");
         ReserveTicketResponse response ;
         Event event = eventRepository.findByEventName(reserveTicketRequest.getEventName());
         event =  ticketService.reserveTicket(event,reserveTicketRequest.
@@ -85,6 +87,8 @@ public class BookEaseEventService implements EventService{
 
     @Override
     public CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest) {
+        if (!eventExist(cancelReservationRequest.getEventName())) throw new EventDoesntExistException(
+                cancelReservationRequest.getEventName()+" doesnt exist ");
         CancelReservationResponse response = new CancelReservationResponse();
         Event event = eventRepository.findByEventName(cancelReservationRequest.getEventName());
         event = ticketService.cancelReservedTicket(event,cancelReservationRequest.getNumberOfReservedTicket(),
