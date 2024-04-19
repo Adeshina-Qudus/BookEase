@@ -30,14 +30,11 @@ public class UserServiceTest {
     private UserRepository userRepository;
     @Autowired
     private TicketRepository ticketRepository;
-    @Autowired
-    private EventRepository eventRepository;
 
     @AfterEach
     public void deleteAll(){
         userRepository.deleteAll();
-        eventRepository.deleteAll();
-        ticketRepository.deleteAll();
+//        ticketRepository.deleteAll();
     }
 
     @Test
@@ -93,7 +90,7 @@ public class UserServiceTest {
         LocalDate date = LocalDate.parse(dateInput,formatter);
         request.setDate(date);
 
-        request.setAvailableAttendees(20);
+        request.setAvailableAttendees(0);
         request.setEventDescription("description");
         request.setCategory("concert");
         request.setUserEmail("djfemz22@gmail.com");
@@ -111,22 +108,6 @@ public class UserServiceTest {
         accountRequest.setEmail("djfemz22@gmail.com");
         accountRequest.setPassword("Femzy12@");
         userService.createAccount(accountRequest);
-
-        CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert");
-
-        String dateInput = "01/13/2024";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate date = LocalDate.parse(dateInput,formatter);
-        request.setDate(date);
-
-        request.setAvailableAttendees(20);
-        request.setEventDescription("description");
-        request.setCategory("concert");
-        request.setUserEmail("djfemz22@gmail.com");
-
-        userService.createEvent(request);
-
         SearchEventRequest searchEventRequest = new SearchEventRequest();
         searchEventRequest.setEventName("Mr Money With The Vibe Concert");
         searchEventRequest.setUserEmail("djfemz22@gmail.com");
@@ -144,23 +125,9 @@ public class UserServiceTest {
         accountRequest.setPassword("Femzy12@");
         userService.createAccount(accountRequest);
 
-        CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
-
-        String dateInput = "01/13/2024";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate date = LocalDate.parse(dateInput,formatter);
-        request.setDate(date);
-
-        request.setEventDescription("description");
-        request.setCategory("concert");
-        request.setUserEmail("djfemz222@gmail.com");
-
-        userService.createEvent(request);
-
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  4LetGoBaby@@1!!!");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
 
         ReserveTicketResponse ticketResponse = userService.reserveTicket(reserveTicketRequest);
@@ -179,23 +146,9 @@ public class UserServiceTest {
         accountRequest.setPassword("Femzy12@");
         userService.createAccount(accountRequest);
 
-        CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
-
-        String dateInput = "01/13/2024";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate date = LocalDate.parse(dateInput,formatter);
-        request.setDate(date);
-
-        request.setEventDescription("description");
-        request.setCategory("concert");
-        request.setUserEmail("djfemz222@gmail.com");
-
-        userService.createEvent(request);
-
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
         userService.reserveTicket(reserveTicketRequest);
 
@@ -222,13 +175,13 @@ public class UserServiceTest {
         userService.createAccount(accountRequest);
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
         userService.reserveTicket(reserveTicketRequest);
 
         CancelReservationRequest cancelReservationRequest = new CancelReservationRequest();
         cancelReservationRequest.setNumberOfReservedTicket(2);
-        cancelReservationRequest.setEventName("Mr Money With The Vibe Concert  454LetGoBaby@@1!!!");
+        cancelReservationRequest.setEventName("Mr Money With The Vibe Concert");
         cancelReservationRequest.setAttendeesEmail("djfemz22@gmail.com");
 
         CancelReservationResponse response =
