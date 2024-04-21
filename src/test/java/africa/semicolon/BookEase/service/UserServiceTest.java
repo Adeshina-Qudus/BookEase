@@ -34,7 +34,6 @@ public class UserServiceTest {
     @AfterEach
     public void deleteAll(){
         userRepository.deleteAll();
-//        ticketRepository.deleteAll();
     }
 
     @Test

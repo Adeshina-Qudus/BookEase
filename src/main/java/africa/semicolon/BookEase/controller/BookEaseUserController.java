@@ -1,9 +1,6 @@
 package africa.semicolon.BookEase.controller;
 
-import africa.semicolon.BookEase.dtos.request.CreateAccountRequest;
-import africa.semicolon.BookEase.dtos.request.CreateEventRequest;
-import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
-import africa.semicolon.BookEase.dtos.request.SearchEventRequest;
+import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.dtos.response.*;
 import africa.semicolon.BookEase.exception.BookEaseException;
 import africa.semicolon.BookEase.service.UserService;
@@ -62,9 +59,30 @@ public class BookEaseUserController {
             return new ResponseEntity<>(new ApiResponse(true,userService.reserveTicket(request)
             ),HttpStatus.OK);
         }catch (BookEaseException exception){
-            return new ResponseEntity<>(new ApiResponse(false,exception.getMessage()),HttpStatus.NOT_IMPLEMENTED);
+            return new ResponseEntity<>(new ApiResponse(false,exception.getMessage()),
+                    HttpStatus.NOT_IMPLEMENTED);
         }
     }
 
+    @PostMapping("/viewBookedEvent")
+    public ResponseEntity<?> viewBookedEvent(@RequestBody ViewBookedEventRequest request){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true,userService.viewBookedEvent(request)),
+                    HttpStatus.OK);
+        }catch (BookEaseException exception){
+            return new ResponseEntity<>(new ApiResponse(false,exception.getMessage()),
+                    HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
+    @PostMapping("/cancelReservation")
+    public ResponseEntity<?> cancelReservation(@RequestBody CancelReservationRequest request){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true,userService.cancelReservation(request)),
+                    HttpStatus.OK);
+        }catch(BookEaseException exception){
+            return new ResponseEntity<>(new ApiResponse(false,exception.getMessage()),
+                    HttpStatus.NOT_IMPLEMENTED);
+        }
+    }
 }
