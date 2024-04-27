@@ -1,4 +1,4 @@
-package africa.semicolon.BookEase.exception;
+package africa.semicolon.BookEase.exceptions;
 
 public class EventDoesntExistException extends BookEaseException{
 

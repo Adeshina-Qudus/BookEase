@@ -1,16 +1,17 @@
-package africa.semicolon.BookEase.service;
+package africa.semicolon.BookEase.services;
 
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.data.model.User;
 import africa.semicolon.BookEase.dtos.response.*;
-import africa.semicolon.BookEase.exception.InvalidMailFormatException;
-import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
+import africa.semicolon.BookEase.exceptions.InvalidMailFormatException;
+import africa.semicolon.BookEase.exceptions.InvalidPasswordFormatException;
+import africa.semicolon.BookEase.exceptions.UserDoesntExistException;
 import africa.semicolon.BookEase.utils.BookEaseUserMapper;
 import africa.semicolon.BookEase.utils.Verification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import africa.semicolon.BookEase.exception.UserAlreadyExistException;
+import africa.semicolon.BookEase.exceptions.UserAlreadyExistException;
 
 import java.util.List;
 
@@ -49,7 +50,9 @@ public class BookEaseUserService implements UserService{
 
     @Override
     public CreateEventResponse createEvent(CreateEventRequest request) {
-        User user = userRepository.findByEmail(request.getUserEmail());
+        if (!userExist(request.getUserEmail())) throw new UserDoesntExistException("user with "+
+                request.getUserEmail()+" doesnt exist "
+        );
         return eventService.createEvent(request);
     }
 

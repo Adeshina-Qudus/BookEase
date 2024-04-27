@@ -22,6 +22,7 @@ public class Event {
     private Integer availableAttendees;
     private String eventDescription;
     private Category category;
-    @OneToMany()
-    private List<Ticket> ticket;
+//    @OneToMany(cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "event" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets;
 }

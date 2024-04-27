@@ -2,8 +2,8 @@ package africa.semicolon.BookEase.controller;
 
 import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.dtos.response.*;
-import africa.semicolon.BookEase.exception.BookEaseException;
-import africa.semicolon.BookEase.service.UserService;
+import africa.semicolon.BookEase.exceptions.BookEaseException;
+import africa.semicolon.BookEase.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

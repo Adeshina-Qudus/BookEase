@@ -1,14 +1,12 @@
-package africa.semicolon.BookEase.service;
+package africa.semicolon.BookEase.services;
 
-import africa.semicolon.BookEase.data.repositories.EventRepository;
 import africa.semicolon.BookEase.data.repositories.TicketRepository;
 import africa.semicolon.BookEase.data.repositories.UserRepository;
 import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.dtos.response.*;
-import africa.semicolon.BookEase.exception.InvalidMailFormatException;
-import africa.semicolon.BookEase.exception.InvalidPasswordFormatException;
+import africa.semicolon.BookEase.exceptions.InvalidMailFormatException;
+import africa.semicolon.BookEase.exceptions.InvalidPasswordFormatException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -109,7 +107,7 @@ public class UserServiceTest {
         userService.createAccount(accountRequest);
         SearchEventRequest searchEventRequest = new SearchEventRequest();
         searchEventRequest.setEventName("Mr Money With The Vibe Concert");
-        searchEventRequest.setUserEmail("djfemz22@gmail.com");
+//        searchEventRequest.setUserEmail("djfemz22@gmail.com");
         SearchEventResponse response = userService.searchEvent(searchEventRequest);
         System.out.println(response);
         assertThat(response).isNotNull();
