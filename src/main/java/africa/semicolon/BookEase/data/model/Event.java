@@ -23,6 +23,6 @@ public class Event {
     private String eventDescription;
     private Category category;
 //    @OneToMany(cascade = {CascadeType.MERGE})
-    @OneToMany(mappedBy = "event" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "event" , cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Ticket> tickets;
 }

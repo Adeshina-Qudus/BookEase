@@ -165,20 +165,20 @@ public class UserServiceTest {
 
     @Test
     public void cancelReservationTest(){
-        CreateAccountRequest accountRequest = new CreateAccountRequest();
-        accountRequest.setName("Femi");
-        accountRequest.setEmail("qudusa55@gmail.com");
-        accountRequest.setPassword("Femzy12@");
-        userService.createAccount(accountRequest);
+//        CreateAccountRequest accountRequest = new CreateAccountRequest();
+//        accountRequest.setName("Femi");
+//        accountRequest.setEmail("qudusa55@gmail.com");
+//        accountRequest.setPassword("Femzy12@");
+//        userService.createAccount(accountRequest);
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
+        reserveTicketRequest.setEventName("lagos fest");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
         userService.reserveTicket(reserveTicketRequest);
 
         CancelReservationRequest cancelReservationRequest = new CancelReservationRequest();
         cancelReservationRequest.setNumberOfReservedTicket(2);
-        cancelReservationRequest.setEventName("Mr Money With The Vibe Concert");
+        cancelReservationRequest.setEventName("lagos fest");
         cancelReservationRequest.setAttendeesEmail("djfemz22@gmail.com");
 
         CancelReservationResponse response =

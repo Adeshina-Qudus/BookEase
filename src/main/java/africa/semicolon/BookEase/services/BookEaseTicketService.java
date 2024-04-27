@@ -5,6 +5,7 @@ import africa.semicolon.BookEase.data.model.Ticket;
 import africa.semicolon.BookEase.data.repositories.TicketRepository;
 import africa.semicolon.BookEase.dtos.request.CancelReservationRequest;
 import africa.semicolon.BookEase.dtos.request.ReserveTicketRequest;
+import africa.semicolon.BookEase.exceptions.CannotCancelZeroTicket;
 import africa.semicolon.BookEase.exceptions.CannotReserveZeroTicket;
 import africa.semicolon.BookEase.exceptions.TicketCannotBeReservedAnymoreException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +45,19 @@ public class BookEaseTicketService implements TicketService{
     @Override
     public Event cancelReservedTicket(Event event, CancelReservationRequest cancelReservationRequest) {
         List<Ticket> tickets = ticketRepository.findByEmail(cancelReservationRequest.getAttendeesEmail());
-        for (int count = 0 ; count < cancelReservationRequest.getNumberOfReservedTicket();count ++){
-            cancelTicket(event, tickets, count);
-        }
-        event.setAvailableAttendees(event.getAvailableAttendees()-
-                cancelReservationRequest.getNumberOfReservedTicket());
+        if (cancelReservationRequest.getNumberOfReservedTicket()  < 1) throw new
+                CannotCancelZeroTicket("Cannot Cancel Zero Ticket");
+        tickets.stream().filter(e -> e.getEventName().equals(event.getEventName()))
+                .parallel()
+                .forEach(ticket -> cancelTicket(event,ticket));
+        int updatedAvailableAttendees = event.getAvailableAttendees() -
+                cancelReservationRequest.getNumberOfReservedTicket();
+        event.setAvailableAttendees(updatedAvailableAttendees);
         return event;
     }
-    private void cancelTicket(Event event, List<Ticket> tickets, int count) {
-        if (tickets.get(count).getEventName().equals(event.getEventName())){
-            ticketRepository.delete(tickets.get(count));
-            event.getTickets().remove(tickets.get(count));
-        }
+    private void cancelTicket(Event event, Ticket ticket) {
+            ticketRepository.delete(ticket);
+            event.getTickets().remove(ticket);
     }
 //    @Transactional
     public Ticket createTicket(Event event, int count, String email) {
