@@ -59,7 +59,6 @@ public class BookEaseTicketService implements TicketService{
             ticketRepository.delete(ticket);
             event.getTickets().remove(ticket);
     }
-//    @Transactional
     public Ticket createTicket(Event event, int count, String email) {
         Ticket ticket = new Ticket();
         ticket.setEventName(event.getEventName());

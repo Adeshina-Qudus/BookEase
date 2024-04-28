@@ -28,6 +28,8 @@ public class UserServiceTest {
     private UserRepository userRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private NotificationSender notificationSender;
 
     @AfterEach
     public void deleteAll(){
@@ -185,5 +187,21 @@ public class UserServiceTest {
                 userService.cancelReservation(cancelReservationRequest);
         assertThat(response).isNotNull();
 
+    }
+
+    @Test
+    public void sendNotificationTest(){
+        ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
+        reserveTicketRequest.setNumberOfReservedTicket(3);
+        reserveTicketRequest.setEventName("lagos fest");
+        reserveTicketRequest.setAttendeesEmail("delighted");
+        userService.reserveTicket(reserveTicketRequest);
+
+        NotificationSenderRequest senderRequest = new NotificationSenderRequest();
+        senderRequest.setName("Bllizz");
+        senderRequest.setEmail(senderRequest.getName());
+
+        NotificationResponse response = notificationSender.sendNotification(senderRequest);
+        assertThat(response).isNotNull();
     }
 }
