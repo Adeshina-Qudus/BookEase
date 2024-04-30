@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,8 +27,8 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private TicketRepository ticketRepository;
+//    @Autowired
+//    private TicketRepository ticketRepository;
     @Autowired
     private NotificationSender notificationSender;
 
@@ -194,14 +195,26 @@ public class UserServiceTest {
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
         reserveTicketRequest.setEventName("lagos fest");
-        reserveTicketRequest.setAttendeesEmail("delighted");
+        reserveTicketRequest.setAttendeesEmail("qudusa55@gmIL.com");
         userService.reserveTicket(reserveTicketRequest);
 
         NotificationSenderRequest senderRequest = new NotificationSenderRequest();
         senderRequest.setName("Bllizz");
-        senderRequest.setEmail(senderRequest.getName());
+        senderRequest.setEmail("alimotadeshina03@gmail.com");
+
+
+        List<ReceiverRequest> receiverRequestList = new ArrayList<>();
+
+        ReceiverRequest request = new ReceiverRequest();
+        request.setName(reserveTicketRequest.getAttendeesEmail());
+        request.setEmail(reserveTicketRequest.getAttendeesEmail());
+
+        receiverRequestList.add(request);
+
+        senderRequest.setTo(receiverRequestList);
 
         NotificationResponse response = notificationSender.sendNotification(senderRequest);
+        System.out.println(response.toString());
         assertThat(response).isNotNull();
     }
 }

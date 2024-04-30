@@ -18,4 +18,6 @@ public interface EventService {
     List<ViewBookedEventResponse> viewBookedEvent(ViewBookedEventRequest viewBookedEventRequest);
 
     CancelReservationResponse cancelReservation(CancelReservationRequest cancelReservationRequest);
+
+    List<Event> getAllEvent();
 }

@@ -94,6 +94,12 @@ public class BookEaseEventService implements EventService{
         response.setMessage("Canceled");
         return response;
     }
+
+    @Override
+    public List<Event> getAllEvent() {
+        return eventRepository.findAll();
+    }
+
     private List<ViewBookedEventResponse> mappingEachEvent(List<ViewBookedEventResponse> bookedEventResponses,
                                                            List<Ticket> tickets) {
         ViewBookedEventResponse viewBookedEventResponse = new ViewBookedEventResponse();
