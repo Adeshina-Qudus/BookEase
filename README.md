@@ -31,7 +31,6 @@ BookEase is a streamlined booking system designed to simplify the process of sch
 - viewBookedEvent
 
 
-
 ## Installation
 
 1. Create an account with git
@@ -54,5 +53,105 @@ BookEase is a streamlined booking system designed to simplify the process of sch
 
    This end point create a new user, it takes in the user name , email and password. The email and password are expected to meet the following criteria.
    
+## Email Validation:
+
+                valid Email : user@gmail.com
+   
+  1.  Domain: gmail
+  2.  Top-level domain: com
+
+## Password Validation:
+
+                 valid Password : HolyChild12@
+  
+1. Starts with an uppercase letter.
+2. Followed by more than four letters.
+3. Ends with at least one digit or special character.
+               
+ ## Request
+ -  Url: localhost:2020/api/v1/customer/register
+ -  Method: Post
+ -  Header: content-type:application/json
+ -  Body:
+
+             {
+                   "name" : "boyDirector",
+                   "email" :"qudusa55@gmail.com",
+                   "password" : "Director12%"
+             }
+
+  - Response body
+        
+              {
+                      "successful": true,
+                     "data": {
+                     "message": "Account Created"
+                             }
+              }
+    ## Trying To CreateAccount With This Again ?
+     status: 404 Bad Request
+  
+              {
+                   "name" : "boyDirector",
+                   "email" :"qudusa55@gmail.com",
+                   "password" : "Director12%"
+              }
+
+    - Response body
+        
+        
+              {
+                      "successful": true,
+                     "data": {
+                     "message": "user with qudusa55@gmail,com already exist"
+                             }
+              }
+      
+      ## Trying To CreateAccount With Invalid Password Format ?
+      
+         status: 404 Bad Request
+  
+              {
+                   "name" : "boyDirector",
+                   "email" :"qudusa55@gmail.com",
+                   "password" : "director12"
+              }
+
+      - Response body
+        
+        
+              {
+                      "successful": true,
+                     "data": {
+                     "message": "invalid password format"
+                             }
+              }
+
+        ## Trying To CreateAccount With Invalid Email Format ?
+      
+         status: 404 Bad Request
+  
+              {
+                   "name" : "boyDirector",
+                   "email" :"qudusa55@gmail.com",
+                   "password" : "director12"
+              }
+
+      - Response body
+        
+        
+              {
+                      "successful": true,
+                     "data": {
+                     "message": "invalid Email format"
+                             }
+              }
+
+        
+    
+
+           
+
+         
 
 
