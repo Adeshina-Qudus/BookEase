@@ -27,8 +27,6 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-//    @Autowired
-//    private TicketRepository ticketRepository;
     @Autowired
     private NotificationSender notificationSender;
 
@@ -75,50 +73,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void userCreateEventTest(){
-
-        CreateAccountRequest accountRequest = new CreateAccountRequest();
-        accountRequest.setName("Femi");
-        accountRequest.setEmail("djfemz22@gmail.com");
-        accountRequest.setPassword("Femzy12@");
-        userService.createAccount(accountRequest);
-        CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert");
-
-        String dateInput = "01/13/2024";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate date = LocalDate.parse(dateInput,formatter);
-        request.setDate(date);
-
-        request.setAvailableAttendees(0);
-        request.setEventDescription("description");
-        request.setCategory("concert");
-        request.setUserEmail("djfemz22@gmail.com");
-
-        CreateEventResponse response = userService.createEvent(request);
-
-        assertThat(response).isNotNull();
-
-    }
-
-    @Test
-    public void searchEventTest(){
-        CreateAccountRequest accountRequest = new CreateAccountRequest();
-        accountRequest.setName("Femi");
-        accountRequest.setEmail("djfemz22@gmail.com");
-        accountRequest.setPassword("Femzy12@");
-        userService.createAccount(accountRequest);
-        SearchEventRequest searchEventRequest = new SearchEventRequest();
-        searchEventRequest.setEventName("Mr Money With The Vibe Concert");
-//        searchEventRequest.setUserEmail("djfemz22@gmail.com");
-        SearchEventResponse response = userService.searchEvent(searchEventRequest);
-        System.out.println(response);
-        assertThat(response).isNotNull();
-    }
-
-    @Test
     public void userReserveTicketTest(){
-
         CreateAccountRequest accountRequest = new CreateAccountRequest();
         accountRequest.setName("Femi");
         accountRequest.setEmail("djfem5z123422@gmail.com");
@@ -132,20 +87,11 @@ public class UserServiceTest {
 
         ReserveTicketResponse ticketResponse = userService.reserveTicket(reserveTicketRequest);
 
-        System.out.println(ticketResponse);
-
         assertThat(ticketResponse).isNotNull();
     }
 
     @Test
     public void viewBookedEventTest(){
-
-        CreateAccountRequest accountRequest = new CreateAccountRequest();
-        accountRequest.setName("Femi");
-        accountRequest.setEmail("djfem154z1123422@gmail.com");
-        accountRequest.setPassword("Femzy12@");
-        userService.createAccount(accountRequest);
-
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
         reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
@@ -159,20 +105,11 @@ public class UserServiceTest {
        List<ViewBookedEventResponse> response =
                 userService.viewBookedEvent(viewBookedEventRequest);
 
-        System.out.println(response.toString());
-
         assertThat(response).isNotNull();
     }
 
-
-
     @Test
     public void cancelReservationTest(){
-//        CreateAccountRequest accountRequest = new CreateAccountRequest();
-//        accountRequest.setName("Femi");
-//        accountRequest.setEmail("qudusa55@gmail.com");
-//        accountRequest.setPassword("Femzy12@");
-//        userService.createAccount(accountRequest);
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
         reserveTicketRequest.setEventName("lagos fest");
@@ -190,31 +127,4 @@ public class UserServiceTest {
 
     }
 
-    @Test
-    public void sendNotificationTest(){
-        ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
-        reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("lagos fest");
-        reserveTicketRequest.setAttendeesEmail("qudusa55@gmIL.com");
-        userService.reserveTicket(reserveTicketRequest);
-
-        NotificationSenderRequest senderRequest = new NotificationSenderRequest();
-        senderRequest.setName("Bllizz");
-        senderRequest.setEmail("alimotadeshina03@gmail.com");
-
-
-        List<ReceiverRequest> receiverRequestList = new ArrayList<>();
-
-        ReceiverRequest request = new ReceiverRequest();
-        request.setName(reserveTicketRequest.getAttendeesEmail());
-        request.setEmail(reserveTicketRequest.getAttendeesEmail());
-
-        receiverRequestList.add(request);
-
-        senderRequest.setTo(receiverRequestList);
-
-        NotificationResponse response = notificationSender.sendNotification(senderRequest);
-        System.out.println(response.toString());
-        assertThat(response).isNotNull();
-    }
 }

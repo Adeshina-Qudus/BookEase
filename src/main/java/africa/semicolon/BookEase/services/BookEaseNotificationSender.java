@@ -2,6 +2,7 @@ package africa.semicolon.BookEase.services;
 
 import africa.semicolon.BookEase.dtos.request.DataSender;
 import africa.semicolon.BookEase.dtos.request.NotificationSenderRequest;
+import africa.semicolon.BookEase.dtos.request.ReceiverRequest;
 import africa.semicolon.BookEase.dtos.response.NotificationResponse;
 import africa.semicolon.BookEase.utils.NotificationContent;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.ejb.Schedule;
 
+import java.util.Objects;
+
 import static africa.semicolon.BookEase.utils.NotificationContent.htmlContent;
 
 @Service
@@ -25,9 +28,7 @@ public class BookEaseNotificationSender implements NotificationSender {
     @Value("${brevo.api.key}")
     private String apiKey;
 
-
     @Override
-//    @Schedule(second="0", minute="0", hour="8", dayOfWeek="Mon-Fri", persistent=false)
     public NotificationResponse sendNotification(NotificationSenderRequest senderRequest) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -36,9 +37,12 @@ public class BookEaseNotificationSender implements NotificationSender {
         dataSender.setSender(senderRequest);
         dataSender.setTo(senderRequest.getTo());
         dataSender.setSubject("Reminder");
-        dataSender.setHtmlContent(htmlContent(senderRequest.getEventName(),senderRequest.getName(),
+        dataSender.setHtmlContent(htmlContent(senderRequest.getEventName(),
+                senderRequest.getTo().getFirst().getName(),
                 senderRequest.getDate()));
+        System.out.println(dataSender.getSender().getName());
         HttpEntity<?> httpEntity = new HttpEntity<>(dataSender, httpHeaders);
+        System.out.println((httpEntity.getBody()));
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<NotificationResponse> response = restTemplate.postForEntity(url, httpEntity,
                 NotificationResponse.class);
