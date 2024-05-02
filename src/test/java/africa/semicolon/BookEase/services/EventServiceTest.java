@@ -26,7 +26,7 @@ public class EventServiceTest {
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate date = LocalDate.parse(dateInput,formatter);
-        request.setDate(date);
+        request.setDate(String.valueOf(date));
         request.setAvailableAttendees(0);
         request.setEventDescription("description");
         request.setCategory("concert");
@@ -38,9 +38,20 @@ public class EventServiceTest {
 
     @Test
     public void searchEventTest(){
+        CreateEventRequest request = new CreateEventRequest();
+        request.setEventName("Mr Money With The Vibe Concert");
+        String dateInput = "01/13/2024";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate date = LocalDate.parse(dateInput,formatter);
+        request.setDate(String.valueOf(date));
+        request.setAvailableAttendees(0);
+        request.setEventDescription("description");
+        request.setCategory("concert");
+        request.setUserEmail("djfemz22@gmail.com");
+        CreateEventResponse response = eventService.createEvent(request);
         SearchEventRequest searchEventRequest = new SearchEventRequest();
         searchEventRequest.setEventName("Mr Money With The Vibe Concert");
-        SearchEventResponse response = eventService.searchEvent(searchEventRequest);
+        SearchEventResponse searchEventResponse = eventService.searchEvent(searchEventRequest);
         assertThat(response).isNotNull();
     }
 

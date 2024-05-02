@@ -7,6 +7,7 @@ import africa.semicolon.BookEase.dtos.response.*;
 import africa.semicolon.BookEase.exceptions.InvalidMailFormatException;
 import africa.semicolon.BookEase.exceptions.InvalidPasswordFormatException;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,11 +29,25 @@ public class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private NotificationSender notificationSender;
+    private EventService eventService;
 
     @AfterEach
     public void deleteAll(){
         userRepository.deleteAll();
+    }
+    @BeforeEach
+    public void beforeEach(){
+        CreateEventRequest request = new CreateEventRequest();
+        request.setEventName("Mr Money With The Vibe Concert");
+        String dateInput = "01/13/2024";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate date = LocalDate.parse(dateInput,formatter);
+        request.setDate(String.valueOf(date));
+        request.setAvailableAttendees(0);
+        request.setEventDescription("description");
+        request.setCategory("concert");
+        request.setUserEmail("djfemz22@gmail.com");
+        eventService.createEvent(request);
     }
 
     @Test
@@ -74,11 +89,6 @@ public class UserServiceTest {
 
     @Test
     public void userReserveTicketTest(){
-        CreateAccountRequest accountRequest = new CreateAccountRequest();
-        accountRequest.setName("Femi");
-        accountRequest.setEmail("djfem5z123422@gmail.com");
-        accountRequest.setPassword("Femzy12@");
-        userService.createAccount(accountRequest);
 
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
@@ -112,13 +122,13 @@ public class UserServiceTest {
     public void cancelReservationTest(){
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("lagos fest");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
         reserveTicketRequest.setAttendeesEmail("djfemz22@gmail.com");
         userService.reserveTicket(reserveTicketRequest);
 
         CancelReservationRequest cancelReservationRequest = new CancelReservationRequest();
         cancelReservationRequest.setNumberOfReservedTicket(2);
-        cancelReservationRequest.setEventName("lagos fest");
+        cancelReservationRequest.setEventName("Mr Money With The Vibe Concert");
         cancelReservationRequest.setAttendeesEmail("djfemz22@gmail.com");
 
         CancelReservationResponse response =

@@ -11,6 +11,7 @@ import africa.semicolon.BookEase.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,19 +27,26 @@ public class BookEaseEventService implements EventService{
     public CreateEventResponse createEvent(CreateEventRequest request) {
         if (eventExist(request.getEventName())) throw new EventAlreadyExistException(request.getEventName()+
                 " already exist");
-        CreateEventResponse response = new CreateEventResponse();
+    CreateEventResponse response = new CreateEventResponse();
          Event event = ModelMapperConfig.modelMapper().map(request,Event.class);
+         event.setDate(LocalDate.parse(request.getDate()));
+         Category category = checkIfCategoryExist(request.getCategory());
+         if (category == null) throw new CategoryNotFoundException("Category doesnt exist");
+         event.setCategory(category);
          event.setAvailableAttendees(0);
-         for (Category category : Category.values()) {
-             if (request.getCategory().toUpperCase().equals(category.name())) {
-                 event.setCategory(category);
-             }
-         }
          eventRepository.save(event);
          response.setMessage("The "+event.getEventName()+" Created");
          return response;
     }
 
+    private Category checkIfCategoryExist(String category) {
+        for (Category category1 : Category.values()) {
+                if (category.toUpperCase().equals(category1.name())){
+                    return category1;
+                }
+            }
+        return null;
+    }
     private boolean eventExist(String eventName) {
         Event event = eventRepository.findByEventName(eventName);
         return event != null;
@@ -49,7 +57,6 @@ public class BookEaseEventService implements EventService{
         if (!eventExist(searchEventRequest.getEventName())) throw new EventDoesntExistException(
                 searchEventRequest.getEventName()+" doesnt exist ");
         SearchEventResponse searchEventResponse = new SearchEventResponse();
-
         for (Event event : eventRepository.findAll()){
             if (event.getEventName().equals(searchEventRequest.getEventName())){
                 searchEventResponse = ModelMapperConfig.modelMapper().map(event,SearchEventResponse.class);

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 public class CreateEventRequest {
     private String eventName;
-    private LocalDate date;
+    private String date;
     private Integer availableAttendees;
     private String eventDescription;
     private String category;

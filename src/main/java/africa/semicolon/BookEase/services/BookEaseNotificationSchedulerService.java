@@ -24,7 +24,9 @@ public class BookEaseNotificationSchedulerService {
             NotificationSenderRequest senderRequest = new NotificationSenderRequest();
             senderRequest.setDate(String.valueOf(eachEvent.getDate()));
             senderRequest.setName(eachEvent.getEventName());
+            senderRequest.setEventName(eachEvent.getEventName());
             senderRequest.setEmail("qudusa55@gmail.com");
+            senderRequest.setDate(eachEvent.getDate().toString());
             List<ReceiverRequest> receivers = new ArrayList<>();
             eachEvent.getTickets().stream().parallel().forEach(eachTicket ->{
                 ReceiverRequest request =  new ReceiverRequest();

@@ -62,7 +62,7 @@ public class BookEaseTicketService implements TicketService{
     public Ticket createTicket(Event event, int count, String email) {
         Ticket ticket = new Ticket();
         ticket.setEventName(event.getEventName());
-        ticket.setTicketId(count +1);
+        ticket.setTicketId(count + 109134);
         ticket.setEmail(email);
         return ticket;
     }
