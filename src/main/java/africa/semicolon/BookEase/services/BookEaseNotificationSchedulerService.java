@@ -17,7 +17,7 @@ public class BookEaseNotificationSchedulerService {
     private EventService eventService;
     @Autowired
     private NotificationSender notificationSender;
-    @Scheduled(fixedRate = 2 * 60 * 1000)
+//    @Scheduled(fixedRate = 2 * 60 * 1000)
     public void send() {
         List<Event> event = eventService.getAllEvent();
         event.stream().parallel().forEach(eachEvent -> {

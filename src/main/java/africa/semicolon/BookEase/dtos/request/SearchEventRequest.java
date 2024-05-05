@@ -12,5 +12,4 @@ import java.time.LocalDate;
 public class SearchEventRequest {
 
     private String eventName;
-//    private String userEmail;
 }

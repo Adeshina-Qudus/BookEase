@@ -26,7 +26,7 @@ public class NotificationServiceTest {
     public void sendReminderNotificationTest(){
         ReserveTicketRequest reserveTicketRequest = new ReserveTicketRequest();
         reserveTicketRequest.setNumberOfReservedTicket(3);
-        reserveTicketRequest.setEventName("lagos fest 2");
+        reserveTicketRequest.setEventName("Mr Money With The Vibe Concert");
         reserveTicketRequest.setAttendeesEmail("qudusa55@gmIL.com");
         userService.reserveTicket(reserveTicketRequest);
 

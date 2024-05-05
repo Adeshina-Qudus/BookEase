@@ -22,7 +22,6 @@ BookEase is a streamlined booking system designed to simplify the process of sch
 
 
 - createAccount
-- login
 - createEvent
 - cancelEvent
 - reserveTicket
@@ -69,7 +68,7 @@ BookEase is a streamlined booking system designed to simplify the process of sch
 3. Ends with at least one digit or special character.
                
  ## Request
- -  Url: localhost:2020/api/v1/customer/register
+ -  Url: localhost:8080/api/v1/user/createAccount
  -  Method: Post
  -  Header: content-type:application/json
  -  Body:
@@ -89,13 +88,13 @@ BookEase is a streamlined booking system designed to simplify the process of sch
                              }
               }
     ## Trying To CreateAccount With This Again ?
-     status: 404 Bad Request
   
               {
                    "name" : "boyDirector",
                    "email" :"qudusa55@gmail.com",
                    "password" : "Director12%"
               }
+    status: 404 Bad Request
 
     - Response body
         
@@ -109,7 +108,7 @@ BookEase is a streamlined booking system designed to simplify the process of sch
       
       ## Trying To CreateAccount With Invalid Password Format ?
       
-         status: 404 Bad Request
+   status: 404 Bad Request
   
               {
                    "name" : "boyDirector",
@@ -146,6 +145,109 @@ BookEase is a streamlined booking system designed to simplify the process of sch
                      "message": "invalid Email format"
                              }
               }
+
+CreateEventRequest
+
+Description:
+  
+   This end point create an event, it takes in the eventName,date,
+   availableAttendees,eventDescription,category,userEmail
+
+Request
+
+   - Url: localhost:8080/api/v1/user/createEvent
+   - Method: Post
+   - Header: content-type:application/json
+   - Body:
+
+    {   
+          "eventName" : "Mr Money With The Vibe Concert",
+          "date" : "2024-07-20",
+          "availableAttendees" : 0,
+          "eventDescription" : "the real deal",
+          "category" : "CONFERENCE",
+          "userEmail" : "qudusa55@gmail.com"
+    }
+status : 201 created
+- Response body
+
+       {
+          "successful": true,
+          "data": {
+          "message": "The Mr Money With The Vibe Concert1 Created"
+                  }
+       }
+
+Trying to createEvent With un existing user
+
+    {   
+        "eventName" : "Mr Money With The Vibe Concert1",
+        "date" : "2024-07-20",
+        "availableAttendees" : 0,
+        "eventDescription" : "the real deal",
+        "category" : "CONFERENCE",
+        "userEmail" : "unExistingUser@gmail.com"
+    }
+
+status : 501 Not Implemented
+ 
+- Response Body
+        
+        {
+            "successful": false,
+            "data": {
+            "message": "user with qudusa5@gmail.com doesnt exist "
+                    }
+        }
+
+
+Trying to createEvent with an existing eventName
+
+        {   
+            "eventName" : "Mr Money With The Vibe Concert",
+            "date" : "2024-07-20",
+            "availableAttendees" : 0,
+            "eventDescription" : "the real deal",
+            "category" : "CONFERENCE",
+            "userEmail" : "qudusa55@gmail.com"
+        }
+
+status : 501 Not Implemented
+
+- Response Body
+
+        {
+            "successful": false,
+            "data": {
+            "message": "Mr Money With The Vibe Concert already exist"
+                     }
+        }
+
+
+
+SearchEventRequest
+
+Description:
+
+This end point search for event, it takes in the eventName
+
+Request
+
+
+- Url: localhost:8080/api/v1/user/createEvent
+- Method: Post
+- Header: content-type:application/json
+- Body:
+
+    
+ 
+
+
+      
+    
+
+
+
 
         
     

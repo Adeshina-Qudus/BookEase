@@ -8,6 +8,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class NotificationResponse {
-    private String subject;
-    private String htmlContent;
+    private String event;
+    private String email;
 }

@@ -33,17 +33,20 @@ public class BookEaseNotificationSender implements NotificationSender {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.set("api-key", apiKey);
-        DataSender dataSender = new DataSender();
-        dataSender.setSender(senderRequest);
-        dataSender.setTo(senderRequest.getTo());
-        dataSender.setSubject("Reminder");
-        dataSender.setHtmlContent(htmlContent(senderRequest.getEventName(),
-                senderRequest.getTo().stream().iterator().next().getName(),
-                senderRequest.getDate()));
-        HttpEntity<?> httpEntity = new HttpEntity<>(dataSender, httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<NotificationResponse> response = restTemplate.postForEntity(url, httpEntity,
-                NotificationResponse.class);
+        ResponseEntity<NotificationResponse> response = null;
+        for(ReceiverRequest to:  senderRequest.getTo() ){
+            DataSender dataSender = new DataSender();
+            dataSender.setSender(senderRequest);
+            dataSender.getTo().add(to);
+            dataSender.setSubject("Reminder");
+            dataSender.setHtmlContent(htmlContent(senderRequest.getEventName(),
+                    to.getName(),
+                    senderRequest.getDate()));
+            HttpEntity<?> httpEntity = new HttpEntity<>(dataSender, httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            response = restTemplate.postForEntity(url, httpEntity, NotificationResponse.class);
+            System.out.println(response.getBody());
+        }
         return response.getBody();
     }
 }
