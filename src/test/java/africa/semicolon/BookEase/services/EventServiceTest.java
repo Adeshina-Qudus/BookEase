@@ -1,9 +1,11 @@
 package africa.semicolon.BookEase.services;
 
+import africa.semicolon.BookEase.data.repositories.EventRepository;
 import africa.semicolon.BookEase.dtos.request.*;
 import africa.semicolon.BookEase.dtos.response.CreateEventResponse;
 import africa.semicolon.BookEase.dtos.response.SearchEventResponse;
 import africa.semicolon.BookEase.dtos.response.ViewBookedEventResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +20,18 @@ public class EventServiceTest {
 
     @Autowired
     private EventService eventService;
+    @Autowired
+    private EventRepository repository;
+
+    @AfterEach
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 
     @Test
     public void userCreateEventTest(){
         CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert");
+        request.setEventName("Mr Money With The Vibe Concert494");
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate date = LocalDate.parse(dateInput,formatter);
@@ -39,7 +48,7 @@ public class EventServiceTest {
     @Test
     public void searchEventTest(){
         CreateEventRequest request = new CreateEventRequest();
-        request.setEventName("Mr Money With The Vibe Concert44");
+        request.setEventName("Mr Money With The Vibe Concert44004");
         String dateInput = "01/13/2024";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate date = LocalDate.parse(dateInput,formatter);
