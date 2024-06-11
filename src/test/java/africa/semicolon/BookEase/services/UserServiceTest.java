@@ -1,40 +1,40 @@
-//package africa.semicolon.BookEase.services;
-//
-//import africa.semicolon.BookEase.data.repositories.TicketRepository;
-//import africa.semicolon.BookEase.data.repositories.UserRepository;
-//import africa.semicolon.BookEase.dtos.request.*;
-//import africa.semicolon.BookEase.dtos.response.*;
-//import africa.semicolon.BookEase.exceptions.InvalidMailFormatException;
-//import africa.semicolon.BookEase.exceptions.InvalidPasswordFormatException;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import java.time.LocalDate;
-//import java.time.format.DateTimeFormatter;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//
-//@SpringBootTest
-//public class UserServiceTest {
-//
-//    @Autowired
-//    private UserService userService;
-//    @Autowired
-//    private UserRepository userRepository;
-//    @Autowired
-//    private EventService eventService;
-//
-//    @AfterEach
-//    public void deleteAll(){
-//        userRepository.deleteAll();
-//    }
+package africa.semicolon.BookEase.services;
+
+import africa.semicolon.BookEase.data.repositories.TicketRepository;
+import africa.semicolon.BookEase.data.repositories.UserRepository;
+import africa.semicolon.BookEase.dtos.request.*;
+import africa.semicolon.BookEase.dtos.response.*;
+import africa.semicolon.BookEase.exceptions.InvalidMailFormatException;
+import africa.semicolon.BookEase.exceptions.InvalidPasswordFormatException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@SpringBootTest
+public class UserServiceTest {
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private EventService eventService;
+
+    @AfterEach
+    public void deleteAll(){
+        userRepository.deleteAll();
+    }
 //    @BeforeEach
 //    public void beforeEach(){
 //        CreateEventRequest request = new CreateEventRequest();
@@ -49,20 +49,20 @@
 //        request.setUserEmail("djfemz22@gmail.com");
 //        eventService.createEvent(request);
 //    }
-//
-//    @Test
-//    public void userCreatingAccountTest(){
-//        CreateAccountRequest request = new CreateAccountRequest();
-//
-//        request.setName("Femi");
-//        request.setEmail("djfemz22@gmail.com");
-//        request.setPassword("Femzy12@");
-//
-//        CreateAccountResponse response =  userService.createAccount(request);
-//
-//        assertEquals("Account Created",response.getMessage());
-//    }
-//
+
+    @Test
+    public void userCreatingAccountTest(){
+        CreateAccountRequest request = new CreateAccountRequest();
+
+        request.setName("Femi");
+        request.setEmail("djfemz242@gmail.com");
+        request.setPassword("Femzy12@");
+
+        CreateAccountResponse response =  userService.createAccount(request);
+
+        assertEquals("Account Created",response.getMessage());
+    }
+
 //    @Test
 //    public void userCreateAccountWithInvalidEmailFormat(){
 //
@@ -136,5 +136,5 @@
 //        assertThat(response).isNotNull();
 //
 //    }
-//
-//}
+
+}
