@@ -14,7 +14,7 @@
 	<name>BookEase</name>
 	<description>BookEase is a streamlined booking system designed to simplify the process of scheduling appointments, reservations, and services</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
