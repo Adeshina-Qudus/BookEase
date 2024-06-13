@@ -1,9 +1,9 @@
-name: Build and Deploy to EC2
+name: Deploy Docker Image to EC2
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -22,19 +22,21 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Docker image
+    - name: Build and push Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/your-docker-image:latest .
-
-    - name: Push Docker image
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/your-docker-image:latest
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/bookease:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/bookease:latest
 
     - name: Install AWS CLI
       run: |
         sudo apt-get update
         sudo apt-get install -y awscli
 
+    - name: Create SSH key file
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/key.pem
+        chmod 400 $GITHUB_WORKSPACE/key.pem
+        
     - name: Deploy to EC2
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESSKEYID }}
@@ -53,11 +55,9 @@ jobs:
 
         echo "Instance $INSTANCE_ID is running at $PUBLIC_DNS"
 
-        # Copy the SSH key to the runner
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/${{ secrets.KEY_NAME }}.pem
-        chmod 600 $HOME/.ssh/${{ secrets.KEY_NAME }}.pem
-
-        SSH_COMMANDS="sudo yum update -y
-                      sudo amazon-linux-extras install docker -y
-                      sudo service docker start
-                      sudo usermod -a -G docker ec2-user
+        SSH_COMMANDS="sudo apt-get update -y
+                      sudo apt-get install -y docker.io
+                      sudo systemctl start docker
+                      sudo usermod -aG docker ${INSTANCE_USER}
+                      sudo systemctl enable docker
+                      echo $DO
